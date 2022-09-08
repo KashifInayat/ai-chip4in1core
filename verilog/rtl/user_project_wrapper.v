@@ -82,42 +82,54 @@ module user_project_wrapper #(
 /* User project is instantiated  here   */
 /*--------------------------------------*/
 
-user_proj_example mprj (
-`ifdef USE_POWER_PINS
-	.vccd1(vccd1),	// User area 1 1.8V power
-	.vssd1(vssd1),	// User area 1 digital ground
-`endif
+/*--------------------------------------*/
+/* User project is instantiated  here   */
+/*--------------------------------------*/
 
-    .wb_clk_i(wb_clk_i),
-    .wb_rst_i(wb_rst_i),
 
-    // MGMT SoC Wishbone Slave
 
-    .wbs_cyc_i(wbs_cyc_i),
-    .wbs_stb_i(wbs_stb_i),
-    .wbs_we_i(wbs_we_i),
-    .wbs_sel_i(wbs_sel_i),
-    .wbs_adr_i(wbs_adr_i),
-    .wbs_dat_i(wbs_dat_i),
-    .wbs_ack_o(wbs_ack_o),
-    .wbs_dat_o(wbs_dat_o),
 
-    // Logic Analyzer
 
-    .la_data_in(la_data_in),
-    .la_data_out(la_data_out),
-    .la_oenb (la_oenb),
+    FFPMAC ffpmac_0(
+	    .A(la_data_in[15:0]),
+	    .B(la_data_in[31:16]), 
+	    .C(la_data_in[63:32]),
+	    .rnd(la_oenb[1:0]),
+	    .clk(clk_50),
+	    .rst(wb_rst_i),
+	    .result(la_data_out[31:0]));
 
-    // IO Pads
+    CLA_16 cla16_0( 
+	    .OPA(la_data_in[79:64]),
+	    .OPB(la_data_in[95:80]),
+	    .CIN(la_oenb[2]), .PHI(la_oenb[3]),
+	    .SUM_FINAL(la_data_out[47:32]),
+	    .COUT_FINAL(la_data_out[48]),
+	    .CLK(wb_clk_i));
 
-    .io_in (io_in),
-    .io_out(io_out),
-    .io_oeb(io_oeb),
+    sa_2D sa2d_0( 
+	
 
-    // IRQ
-    .irq(user_irq)
-);
+	    .AA(la_data_in[103:96]), 
+	    .BB(la_data_in[111:104]), 
+	    .CLK(wb_clk_i), 
+	    .SHIFTEN(la_oenb[5:4]),
+	    .RST(wb_rst_i), 
+	    .Y(la_data_out[80:49]));
+
+   r8_mb8 r8_mb8_0(
+   
+	    .mx(la_data_in[119:112]),
+	    .my(la_data_in[127:120]),
+	    .CLK(wb_clk_i), 
+	    .RST(wb_rst_i),
+	    .product_final(la_data_out[106:81]));
+
+
+
+
 
 endmodule	// user_project_wrapper
+
 
 `default_nettype wire

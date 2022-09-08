@@ -12,7 +12,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # SPDX-License-Identifier: Apache-2.0
-
 # Base Configurations. Don't Touch
 # section begin
 
@@ -32,35 +31,63 @@ set ::env(DESIGN_NAME) user_project_wrapper
 
 # User Configurations
 
+# save some time
+set ::env(RUN_KLAYOUT_XOR) 0
+set ::env(RUN_KLAYOUT_DRC) 0
+# no point in running DRC with magic once openram is in because it will find 3M issues
+# try to turn off all DRC checking so the flow completes and use precheck for DRC instead.
+set ::env(MAGIC_DRC_USE_GDS) 0
+set ::env(RUN_MAGIC_DRC) 0
+set ::env(QUIT_ON_MAGIC_DRC) 0
+
 ## Source Verilog Files
 set ::env(VERILOG_FILES) "\
 	$::env(CARAVEL_ROOT)/verilog/rtl/defines.v \
 	$script_dir/../../verilog/rtl/user_project_wrapper.v"
 
 ## Clock configurations
-set ::env(CLOCK_PORT) "user_clock2"
-set ::env(CLOCK_NET) "mprj.clk"
+#set ::env(CLOCK_PORT) "user_clock2"
+set ::env(CLOCK_PORT) "wb_clk_i"
+set ::env(CLOCK_NET) "wb_clk_i"
+
 
 set ::env(CLOCK_PERIOD) "10"
 
+
 ## Internal Macros
-### Macro PDN Connections
-set ::env(FP_PDN_MACRO_HOOKS) "\
-	mprj vccd1 vssd1 vccd1 vssd1"
+### Macro PDN Connections done with included file
+source $script_dir/macro_power.tcl
+
 
 ### Macro Placement
 set ::env(MACRO_PLACEMENT_CFG) $script_dir/macro.cfg
 
+
 ### Black-box verilog and views
+
 set ::env(VERILOG_FILES_BLACKBOX) "\
 	$::env(CARAVEL_ROOT)/verilog/rtl/defines.v \
-	$script_dir/../../verilog/rtl/user_proj_example.v"
+	$script_dir/../../verilog/rtl/b_box/*.v"
+### user projects gds and lef files
+source $script_dir/extra_lef_gds.tcl
 
-set ::env(EXTRA_LEFS) "\
-	$script_dir/../../lef/user_proj_example.lef"
+# these get generated - if a project specifies obstruction in the info.yaml
+source $script_dir/obstruction.tcl
 
-set ::env(EXTRA_GDS_FILES) "\
-	$script_dir/../../gds/user_proj_example.gds"
+set ::env(GLB_RT_ALLOW_CONGESTION) "1"
+
+#Reduction in the routing capacity of the edges between the cells in the global routing graph. Values range from 0 to 1.
+#1 = most reduction, 0 = least reduction 
+set ::env(GLB_RT_ADJUSTMENT) 0.70
+     
+set ::env(GLB_RT_L2_ADJUSTMENT) 0.6
+set ::env(GLB_RT_L3_ADJUSTMENT) 0.5
+
+# use 8 cores
+set ::env(ROUTING_CORES) 8
+
+# bail early on problems
+set ::env(DRT_OPT_ITERS) 40
 
 # set ::env(GLB_RT_MAXLAYER) 5
 set ::env(RT_MAX_LAYER) {met4}
