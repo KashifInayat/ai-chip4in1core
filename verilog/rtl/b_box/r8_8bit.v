@@ -1,6 +1,5 @@
 module r8_mb8(mx,my,CLK,RST,product_final);
 `include "./const/parameters_r8mb8.v"
-
 //IO Start
 input wire [WIDTH-1:0] mx;
 input wire [WIDTH-1:0] my;

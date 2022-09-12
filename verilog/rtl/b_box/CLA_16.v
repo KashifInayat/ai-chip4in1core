@@ -20,7 +20,7 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module CLA_16 ( OPA, OPB, CIN,PHI, SUM_FINAL, COUT_FINAL, CLK );
+module CLA_16 ( OPA, OPB, CIN, PHI, SUM_FINAL, COUT_FINAL, CLK );
 `include "./const/parameters_cla.v"
 
 input  [N_16-1:0] OPA;

@@ -6,7 +6,7 @@ module FFPMAC(A, B, C, rnd, clk, rst,  result);
  
   //Parameters
  `include "./const/parameters.v"
-
+  
   //I/O decalarations
   input [WIDTH-1:0] A,B;
   input [CWIDTH-1:0] C;
