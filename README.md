@@ -1,12 +1,7 @@
-# Caravel User Project
+This chip I designed with my mentee Taehyunh Kim (https://github.com/thkim2031), following each design we designed from scratch:
 
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0) [![UPRJ_CI](https://github.com/efabless/caravel_project_example/actions/workflows/user_project_ci.yml/badge.svg)](https://github.com/efabless/caravel_project_example/actions/workflows/user_project_ci.yml) [![Caravel Build](https://github.com/efabless/caravel_project_example/actions/workflows/caravel_build.yml/badge.svg)](https://github.com/efabless/caravel_project_example/actions/workflows/caravel_build.yml)
+1) CLA
+2) BFLOAT-FMA (Bfloat-Multiplication, Single Precision Accmulation)
+3) 2x2 Output Stationary Systolic Array Based ML Accelerator
+4) 8 bit Signed Booth-Radix8 Multiplier
 
-| :exclamation: Important Note            |
-|-----------------------------------------|
-
-## Please fill in your project documentation in this README.md file 
-
-Refer to [README](docs/source/quickstart.rst) for a quick start of how to use caravel_user_project
-
-Refer to [README](docs/source/index.rst) for this sample project documentation. 
