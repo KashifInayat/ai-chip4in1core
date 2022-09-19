@@ -1,4 +1,4 @@
-This chip I designed with my mentee Taehyunh Kim (https://github.com/thkim2031), following each design we designed from scratch:
+This chip we designed (with my mentee Taehyunh Kim (https://github.com/thkim2031)) from scratch, following digital designs macros are harden in it:
 
 1) CLA
 2) BFLOAT-FMA (Bfloat-Multiplication, Single Precision Accmulation)
